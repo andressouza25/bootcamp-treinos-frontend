@@ -143,7 +143,7 @@ Toda alteração neste projeto deve priorizar:
 - **SEMPRE** use React Hook Form para formulários.
 - **SEMPRE** use Zod para validação.
 - **SEMPRE** conecte Zod ao React Hook Form com `zodResolver`.
-- **SEMPRE** use os componentes do `shadcn/ui` para formularios.
+- **SEMPRE** use os componentes do `shadcn/ui` para formulários.
 - **SEMPRE** exiba mensagens de erro de validação.
 - **SEMPRE** defina schemas de validação de forma explícita.
 - **SEMPRE** use tipos inferidos a partir do schema quando fizer sentido.
@@ -197,6 +197,8 @@ Toda alteração neste projeto deve priorizar:
 - **NUNCA** use `<img>` diretamente.
 - **SEMPRE** forneça `alt` descritivo.
 - **SEMPRE** respeite boas práticas de performance com imagens.
+- **SEMPRE** baixe para a pasta local do projeto toda imagem externa que for utilizada na interface.
+- **SEMPRE** prefira servir imagens a partir de `public/` em vez de depender de URLs remotas no código.
 
 ---
 
@@ -225,3 +227,4 @@ const { error } = await authClient.changePassword(payload)
 if (error) {
   // tratar erro
 }
+```

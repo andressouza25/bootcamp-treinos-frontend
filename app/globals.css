@@ -34,6 +34,11 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-auth-page-background: var(--auth-page-background);
+  --color-auth-image-overlay: var(--auth-image-overlay);
+  --color-auth-panel: var(--auth-panel);
+  --color-auth-panel-foreground: var(--auth-panel-foreground);
+  --color-auth-panel-muted-foreground: var(--auth-panel-muted-foreground);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -57,6 +62,11 @@
   --popover-foreground: oklch(0.141 0.005 285.823);
   --primary: oklch(0.488 0.243 264.376);
   --primary-foreground: oklch(0.97 0.014 254.604);
+  --auth-page-background: #000000;
+  --auth-image-overlay: rgb(0 0 0 / 10%);
+  --auth-panel: #2b54ff;
+  --auth-panel-foreground: #ffffff;
+  --auth-panel-muted-foreground: rgb(255 255 255 / 70%);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.967 0.001 286.375);
@@ -91,6 +101,11 @@
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.488 0.243 264.376);
   --primary-foreground: oklch(0.97 0.014 254.604);
+  --auth-page-background: #000000;
+  --auth-image-overlay: rgb(0 0 0 / 10%);
+  --auth-panel: #2b54ff;
+  --auth-panel-foreground: #ffffff;
+  --auth-panel-muted-foreground: rgb(255 255 255 / 70%);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.274 0.006 286.033);
