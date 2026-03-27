@@ -7,6 +7,7 @@ import {
   getTodayDate,
   getWeekDayLabel,
   getWeekDayName,
+  getWorkoutStreakValue,
 } from "@/app/_lib/home";
 import { getHomeData } from "@/app/_lib/api/fetch-generated";
 import { getServerSession } from "@/app/_lib/get-server-session";
@@ -25,7 +26,9 @@ export default async function Home() {
     redirect("/auth");
   }
 
-  const homeDataResponse = await getHomeData(getTodayDate());
+  const homeDataResponse = await getHomeData(getTodayDate(), {
+    cache: "no-store",
+  });
 
   if (homeDataResponse.status === 401) {
     redirect("/auth");
@@ -35,8 +38,14 @@ export default async function Home() {
     notFound();
   }
 
+  const todayDate = getTodayDate();
   const { consistencyByDay, todayWorkoutDay, workoutStreak } = homeDataResponse.data;
-  const currentWeekDates = getCurrentWeekDates(getTodayDate());
+  const currentWeekDates = getCurrentWeekDates(todayDate);
+  const resolvedWorkoutStreak = getWorkoutStreakValue(
+    consistencyByDay,
+    todayDate,
+    workoutStreak,
+  );
   const userName = session.user.name ?? session.user.email?.split("@")[0] ?? "Aluno";
 
 
@@ -126,7 +135,7 @@ export default async function Home() {
               <div className="flex items-center gap-2">
                 <Flame className="size-5 fill-home-streak-icon text-home-streak-icon" />
                 <span className="text-[16px] leading-[1.15] font-semibold text-foreground">
-                  {workoutStreak}
+                  {resolvedWorkoutStreak}
                 </span>
               </div>
             </div>
