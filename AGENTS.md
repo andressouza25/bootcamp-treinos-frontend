@@ -135,6 +135,7 @@ Toda alteração neste projeto deve priorizar:
 ### Regra obrigatória por arquivo
 
 - Um arquivo = um componente principal.
+- NUNCA mais de um componente por arquivo.
 
 ---
 
