@@ -6,20 +6,62 @@ import { Button } from "@/components/ui/button";
 type BottomNavigationItemProps = {
   href?: string;
   icon: ComponentType<{ className?: string }>;
-  isActive?: boolean;
+  activeStyle?: "filled" | "muted";
 };
 
 export default function BottomNavigationItem({
   href,
   icon: Icon,
-  isActive = false,
+  activeStyle,
 }: BottomNavigationItemProps) {
-  if (isActive) {
+  if (activeStyle === "filled" && href) {
+    return (
+      <Button
+        asChild
+        className="size-14 rounded-full bg-primary p-4 text-primary-foreground hover:bg-primary"
+        size="icon"
+      >
+        <Link href={href}>
+          <Icon className="size-6" />
+        </Link>
+      </Button>
+    );
+  }
+
+  if (activeStyle === "filled") {
     return (
       <Button
         className="size-14 rounded-full bg-primary p-4 text-primary-foreground hover:bg-primary"
         size="icon"
         type="button"
+      >
+        <Icon className="size-6" />
+      </Button>
+    );
+  }
+
+  if (activeStyle === "muted" && href) {
+    return (
+      <Button
+        asChild
+        className="size-12 rounded-full p-3 text-home-week-label hover:bg-transparent hover:text-home-week-label"
+        size="icon"
+        variant="ghost"
+      >
+        <Link href={href}>
+          <Icon className="size-6" />
+        </Link>
+      </Button>
+    );
+  }
+
+  if (activeStyle === "muted") {
+    return (
+      <Button
+        className="size-12 rounded-full p-3 text-home-week-label hover:bg-transparent hover:text-home-week-label"
+        size="icon"
+        type="button"
+        variant="ghost"
       >
         <Icon className="size-6" />
       </Button>

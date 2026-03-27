@@ -2,13 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, Dumbbell, Timer } from "lucide-react";
 
+import { getWorkoutDayPath } from "@/app/_lib/workout-day";
+
 type WorkoutDayCardProps = {
   coverImageSrc: string;
   estimatedDurationInSeconds: number;
   exercisesCount: number;
-  href: string;
   name: string;
   weekDayLabel: string;
+  workoutDayId: string;
+  workoutPlanId: string;
 };
 
 const getDurationLabel = (estimatedDurationInSeconds: number) => {
@@ -21,14 +24,15 @@ export default function WorkoutDayCard({
   coverImageSrc,
   estimatedDurationInSeconds,
   exercisesCount,
-  href,
   name,
   weekDayLabel,
+  workoutDayId,
+  workoutPlanId,
 }: WorkoutDayCardProps) {
   return (
     <Link
       className="relative flex h-[200px] w-full flex-col justify-between overflow-hidden rounded-[12px] p-5"
-      href={href}
+      href={getWorkoutDayPath(workoutPlanId, workoutDayId)}
     >
       <Image
         alt={`Treino ${name}`}

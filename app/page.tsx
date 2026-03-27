@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Flame } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 
+import { getHomeData } from "@/app/_lib/api/fetch-generated";
+import { getServerSession } from "@/app/_lib/get-server-session";
 import {
   getCurrentWeekDates,
   getTodayDate,
@@ -9,8 +11,6 @@ import {
   getWeekDayName,
   getWorkoutStreakValue,
 } from "@/app/_lib/home";
-import { getHomeData } from "@/app/_lib/api/fetch-generated";
-import { getServerSession } from "@/app/_lib/get-server-session";
 import BottomNavigation from "@/components/home/bottom-navigation";
 import WorkoutDayCard from "@/components/home/workout-day-card";
 import { Button } from "@/components/ui/button";
@@ -39,20 +39,25 @@ export default async function Home() {
   }
 
   const todayDate = getTodayDate();
-  const { consistencyByDay, todayWorkoutDay, workoutStreak } = homeDataResponse.data;
+  const {
+    activeWorkoutPlanId,
+    consistencyByDay,
+    todayWorkoutDay,
+    workoutStreak,
+  } = homeDataResponse.data;
   const currentWeekDates = getCurrentWeekDates(todayDate);
   const resolvedWorkoutStreak = getWorkoutStreakValue(
     consistencyByDay,
     todayDate,
     workoutStreak,
   );
-  const userName = session.user.name ?? session.user.email?.split("@")[0] ?? "Aluno";
-
+  const userName =
+    session.user.name ?? session.user.email?.split("@")[0] ?? "Aluno";
 
   return (
     <>
       <main className="mx-auto flex min-h-screen w-full max-w-[390px] flex-col bg-background pb-[120px]">
-        <section className="relative flex h-[296px] flex-col justify-between overflow-hidden rounded-b-[20px] px-5 pt-5 pb-10">
+        <section className="relative flex h-[296px] flex-col justify-between overflow-hidden rounded-b-[20px] px-5 pb-10 pt-5">
           <Image
             alt="Atleta segurando halter"
             className="object-cover object-center"
@@ -69,7 +74,7 @@ export default async function Home() {
 
           <div className="relative z-10 flex items-end justify-between">
             <div className="flex flex-col gap-1.5">
-              <h1 className="text-[24px] leading-[1.05] font-semibold text-primary-foreground">
+              <h1 className="text-[24px] font-semibold leading-[1.05] text-primary-foreground">
                 Olá, {userName}
               </h1>
               <p className="text-[14px] leading-[1.15] text-home-workout-meta">
@@ -78,7 +83,7 @@ export default async function Home() {
             </div>
 
             <div className="rounded-full bg-primary px-4 py-2">
-              <span className="text-[14px] leading-none font-semibold text-primary-foreground">
+              <span className="text-[14px] font-semibold leading-none text-primary-foreground">
                 Bora!
               </span>
             </div>
@@ -87,11 +92,11 @@ export default async function Home() {
 
         <section className="flex flex-col gap-3 px-5 pt-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-[18px] leading-[1.4] font-semibold text-foreground">
+            <h2 className="text-[18px] font-semibold leading-[1.4] text-foreground">
               Consistência
             </h2>
             <Button
-              className="h-auto p-0 text-[12px] leading-[1.4] font-normal text-primary hover:text-primary"
+              className="h-auto p-0 text-[12px] font-normal leading-[1.4] text-primary hover:text-primary"
               type="button"
               variant="link"
             >
@@ -134,7 +139,7 @@ export default async function Home() {
             <div className="flex items-center rounded-[12px] bg-home-streak-background px-5 py-8">
               <div className="flex items-center gap-2">
                 <Flame className="size-5 fill-home-streak-icon text-home-streak-icon" />
-                <span className="text-[16px] leading-[1.15] font-semibold text-foreground">
+                <span className="text-[16px] font-semibold leading-[1.15] text-foreground">
                   {resolvedWorkoutStreak}
                 </span>
               </div>
@@ -144,11 +149,11 @@ export default async function Home() {
 
         <section className="flex flex-col gap-3 px-5 pt-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-[18px] leading-[1.4] font-semibold text-foreground">
+            <h2 className="text-[18px] font-semibold leading-[1.4] text-foreground">
               Treino de Hoje
             </h2>
             <Button
-              className="h-auto p-0 text-[12px] leading-[1.4] font-normal text-primary hover:text-primary"
+              className="h-auto p-0 text-[12px] font-normal leading-[1.4] text-primary hover:text-primary"
               type="button"
               variant="link"
             >
@@ -160,14 +165,15 @@ export default async function Home() {
             coverImageSrc={todayWorkoutDay.coverImageUrl ?? todayWorkoutImageUrl}
             estimatedDurationInSeconds={todayWorkoutDay.estimatedDurationInSeconds}
             exercisesCount={todayWorkoutDay.exercisesCount}
-            href="/"
             name={todayWorkoutDay.name}
             weekDayLabel={getWeekDayName(todayWorkoutDay.weekDay)}
+            workoutDayId={todayWorkoutDay.id}
+            workoutPlanId={activeWorkoutPlanId}
           />
         </section>
       </main>
 
-      <BottomNavigation />
+      <BottomNavigation activeItem="home" />
     </>
   );
 }

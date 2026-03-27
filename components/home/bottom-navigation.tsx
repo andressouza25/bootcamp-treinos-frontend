@@ -6,14 +6,48 @@ import {
   UserRound,
 } from "lucide-react";
 
+import { getHomeData } from "@/app/_lib/api/fetch-generated";
+import { getServerSession } from "@/app/_lib/get-server-session";
+import { getTodayDate } from "@/app/_lib/home";
+import { getWorkoutDayPath } from "@/app/_lib/workout-day";
 import BottomNavigationItem from "@/components/home/bottom-navigation-item";
 
-export default function BottomNavigation() {
+type BottomNavigationProps = {
+  activeItem?: "calendar" | "home" | "sparkles";
+};
+
+export default async function BottomNavigation({
+  activeItem = "sparkles",
+}: BottomNavigationProps) {
+  const session = await getServerSession();
+  let calendarHref: string | undefined;
+
+  if (session?.session.userId) {
+    const homeDataResponse = await getHomeData(getTodayDate(), {
+      cache: "no-store",
+    });
+
+    if (homeDataResponse.status === 200) {
+      calendarHref = getWorkoutDayPath(
+        homeDataResponse.data.activeWorkoutPlanId,
+        homeDataResponse.data.todayWorkoutDay.id,
+      );
+    }
+  }
+
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto flex w-full max-w-[393px] items-center justify-center gap-6 rounded-t-[20px] border border-home-surface-border bg-background px-6 py-4">
-      <BottomNavigationItem href="/" icon={Home} />
-      <BottomNavigationItem icon={CalendarDays} />
-      <BottomNavigationItem icon={Sparkles} isActive />
+      <BottomNavigationItem
+        activeStyle={activeItem === "home" ? "muted" : undefined}
+        href="/"
+        icon={Home}
+      />
+      <BottomNavigationItem
+        activeStyle={activeItem === "calendar" ? "muted" : undefined}
+        href={calendarHref}
+        icon={CalendarDays}
+      />
+      <BottomNavigationItem activeStyle="filled" icon={Sparkles} />
       <BottomNavigationItem icon={ChartColumn} />
       <BottomNavigationItem icon={UserRound} />
     </nav>
