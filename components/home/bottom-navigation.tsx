@@ -9,7 +9,6 @@ import {
 import { getHomeData } from "@/app/_lib/api/fetch-generated";
 import { getServerSession } from "@/app/_lib/get-server-session";
 import { getTodayDate } from "@/app/_lib/home";
-import { getWorkoutDayPath } from "@/app/_lib/workout-day";
 import BottomNavigationItem from "@/components/home/bottom-navigation-item";
 
 type BottomNavigationProps = {
@@ -28,10 +27,7 @@ export default async function BottomNavigation({
     });
 
     if (homeDataResponse.status === 200) {
-      calendarHref = getWorkoutDayPath(
-        homeDataResponse.data.activeWorkoutPlanId,
-        homeDataResponse.data.todayWorkoutDay.id,
-      );
+      calendarHref = `/workout-plans/${homeDataResponse.data.activeWorkoutPlanId}`;
     }
   }
 

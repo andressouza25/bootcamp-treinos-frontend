@@ -50,6 +50,8 @@
   --color-home-workout-meta: var(--home-workout-meta);
   --color-home-nav-icon: var(--home-nav-icon);
   --color-home-workout-overlay: var(--home-workout-overlay);
+  --color-workout-plan-banner-overlay: var(--workout-plan-banner-overlay);
+  --color-workout-plan-rest-chip: var(--workout-plan-rest-chip);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -89,6 +91,8 @@
   --home-workout-meta: rgb(255 255 255 / 70%);
   --home-nav-icon: #9b9b9b;
   --home-workout-overlay: linear-gradient(180deg, rgb(0 0 0 / 18%) 0%, rgb(0 0 0 / 84%) 100%);
+  --workout-plan-banner-overlay: linear-gradient(238.09deg, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 80%) 100%);
+  --workout-plan-rest-chip: rgb(0 0 0 / 8%);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.967 0.001 286.375);
@@ -139,6 +143,8 @@
   --home-workout-meta: rgb(255 255 255 / 70%);
   --home-nav-icon: #9b9b9b;
   --home-workout-overlay: linear-gradient(180deg, rgb(0 0 0 / 18%) 0%, rgb(0 0 0 / 84%) 100%);
+  --workout-plan-banner-overlay: linear-gradient(238.09deg, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 80%) 100%);
+  --workout-plan-rest-chip: rgb(0 0 0 / 8%);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.274 0.006 286.033);
