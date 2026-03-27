@@ -12,7 +12,7 @@ import { getTodayDate } from "@/app/_lib/home";
 import BottomNavigationItem from "@/components/home/bottom-navigation-item";
 
 type BottomNavigationProps = {
-  activeItem?: "calendar" | "home" | "sparkles";
+  activeItem?: "calendar" | "home" | "profile" | "sparkles" | "stats";
 };
 
 export default async function BottomNavigation({
@@ -44,8 +44,16 @@ export default async function BottomNavigation({
         icon={CalendarDays}
       />
       <BottomNavigationItem activeStyle="filled" icon={Sparkles} />
-      <BottomNavigationItem icon={ChartColumn} />
-      <BottomNavigationItem icon={UserRound} />
+      <BottomNavigationItem
+        activeStyle={activeItem === "stats" ? "foreground" : undefined}
+        href="/stats"
+        icon={ChartColumn}
+      />
+      <BottomNavigationItem
+        activeStyle={activeItem === "profile" ? "foreground" : undefined}
+        href="/profile"
+        icon={UserRound}
+      />
     </nav>
   );
 }
