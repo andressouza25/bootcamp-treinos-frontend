@@ -1,12 +1,14 @@
 import { BicepsFlexed, Ruler, User, WeightTilde } from "lucide-react";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { getUserTrainData } from "@/app/_lib/api/fetch-generated";
 import {
   getProfileDisplayName,
   getProfileMetrics,
+  mergeProfileData,
   getUserInitials,
 } from "@/app/_lib/profile";
+import { getProfileFromChat } from "@/app/_lib/profile-from-chat";
 import { getServerSession } from "@/app/_lib/get-server-session";
 import BottomNavigation from "@/components/home/bottom-navigation";
 import ProfileLogoutButton from "@/components/profile/profile-logout-button";
@@ -29,12 +31,11 @@ export default async function ProfilePage() {
     redirect("/auth");
   }
 
-  if (userTrainDataResponse.status !== 200) {
-    notFound();
-  }
-
-  const userName = getProfileDisplayName(userTrainDataResponse.data?.userName, session);
-  const userMetrics = getProfileMetrics(userTrainDataResponse.data);
+  const userTrainData = userTrainDataResponse.status === 200 ? userTrainDataResponse.data : null;
+  const profileFromChat = await getProfileFromChat();
+  const resolvedProfileData = mergeProfileData(userTrainData, profileFromChat);
+  const userName = getProfileDisplayName(resolvedProfileData?.userName, session);
+  const userMetrics = getProfileMetrics(resolvedProfileData);
 
   return (
     <>

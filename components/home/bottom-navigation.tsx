@@ -9,6 +9,7 @@ import {
 import { getHomeData } from "@/app/_lib/api/fetch-generated";
 import { getServerSession } from "@/app/_lib/get-server-session";
 import { getTodayDate } from "@/app/_lib/home";
+import OpenChatButton from "@/components/chat/open-chat-button";
 import BottomNavigationItem from "@/components/home/bottom-navigation-item";
 
 type BottomNavigationProps = {
@@ -43,7 +44,13 @@ export default async function BottomNavigation({
         href={calendarHref}
         icon={CalendarDays}
       />
-      <BottomNavigationItem activeStyle="filled" icon={Sparkles} />
+      <OpenChatButton
+        ariaLabel="Abrir coach AI"
+        className="size-14 rounded-full bg-primary p-4 text-primary-foreground hover:bg-primary"
+        size="icon"
+      >
+        <Sparkles className="size-6" />
+      </OpenChatButton>
       <BottomNavigationItem
         activeStyle={activeItem === "stats" ? "foreground" : undefined}
         href="/stats"

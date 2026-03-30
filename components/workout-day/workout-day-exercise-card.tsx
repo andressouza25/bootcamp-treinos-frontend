@@ -6,8 +6,9 @@ import {
   getExerciseRestLabel,
   getExerciseSetsLabel,
 } from "@/app/_lib/workout-day";
-import { Button } from "@/components/ui/button";
+import OpenChatButton from "@/components/chat/open-chat-button";
 import WorkoutDayExerciseChip from "@/components/workout-day/workout-day-exercise-chip";
+import { getExerciseChatInitialMessage } from "@/lib/chat";
 
 type WorkoutDayExerciseCardProps = {
   exercise: GetWorkoutDays200ExercisesItem;
@@ -21,14 +22,15 @@ const WorkoutDayExerciseCard = ({ exercise }: WorkoutDayExerciseCardProps) => {
           {exercise.name}
         </h2>
 
-        <Button
+        <OpenChatButton
+          ariaLabel={`Perguntar como executar ${exercise.name}`}
           className="size-5 p-0 text-home-week-label hover:bg-transparent hover:text-home-week-label"
+          initialMessage={getExerciseChatInitialMessage(exercise.name)}
           size="icon-xs"
-          type="button"
           variant="ghost"
         >
           <CircleQuestionMark className="size-5" />
-        </Button>
+        </OpenChatButton>
       </div>
 
       <div className="flex flex-wrap items-center gap-[6px]">
