@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Goal } from "lucide-react";
 
 import { workoutPlanBannerImageUrl } from "@/app/_lib/workout-plan";
+import FitAiWordmark from "@/components/branding/fit-ai-wordmark";
 
 type WorkoutPlanBannerProps = {
   workoutPlanName: string;
@@ -20,9 +21,7 @@ const WorkoutPlanBanner = ({ workoutPlanName }: WorkoutPlanBannerProps) => {
       />
       <div className="absolute inset-0 bg-workout-plan-banner-overlay" />
 
-      <span className="relative z-10 text-[22px] font-semibold leading-[1.15] text-primary-foreground uppercase">
-        FIT.AI
-      </span>
+      <FitAiWordmark className="relative z-10" tone="inverse" />
 
       <div className="relative z-10 flex items-end justify-between gap-4">
         <div className="flex flex-col gap-3">
@@ -45,4 +44,3 @@ const WorkoutPlanBanner = ({ workoutPlanName }: WorkoutPlanBannerProps) => {
 };
 
 export default WorkoutPlanBanner;
-

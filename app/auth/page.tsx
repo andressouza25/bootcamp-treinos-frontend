@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/app/_lib/get-server-session";
 import GoogleSignInButton from "@/app/auth/_components/google-sign-in-button";
+import FitAiWordmark from "@/components/branding/fit-ai-wordmark";
 
 const heroImageUrl = "/auth/login-hero.png";
-const logoImageUrl = "/auth/fit-ai-logo.svg";
 
 const AuthPage = async () => {
   const session = await getServerSession();
@@ -31,13 +31,7 @@ const AuthPage = async () => {
           </div>
 
           <div className="absolute inset-x-0 top-12 z-10 flex justify-center">
-            <Image
-              alt="Logo FIT.AI"
-              height={38}
-              priority
-              src={logoImageUrl}
-              width={85}
-            />
+            <FitAiWordmark tone="inverse" />
           </div>
 
           <section className="absolute inset-x-0 bottom-0 z-10 rounded-t-[20px] bg-auth-panel px-5 pb-10 pt-12 text-auth-panel-foreground">

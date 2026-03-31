@@ -9,12 +9,12 @@ import {
   getWorkoutStreakValue,
 } from "@/app/_lib/home";
 import { getAppPageContext } from "@/app/_lib/onboarding";
+import FitAiWordmark from "@/components/branding/fit-ai-wordmark";
 import BottomNavigation from "@/components/home/bottom-navigation";
 import WorkoutDayCard from "@/components/home/workout-day-card";
 import { Button } from "@/components/ui/button";
 
 const bannerImageUrl = "/home/home-banner.png";
-const logoImageUrl = "/auth/fit-ai-logo.svg";
 const todayWorkoutImageUrl = "/home/today-workout.png";
 
 export default async function Home() {
@@ -46,9 +46,7 @@ export default async function Home() {
           />
           <div className="absolute inset-0 bg-home-banner-overlay" />
 
-          <div className="relative z-10">
-            <Image alt="Logo FIT.AI" height={38} priority src={logoImageUrl} width={85} />
-          </div>
+          <FitAiWordmark className="relative z-10" tone="inverse" />
 
           <div className="relative z-10 flex items-end justify-between">
             <div className="flex flex-col gap-1.5">
