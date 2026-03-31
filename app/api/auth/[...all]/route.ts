@@ -20,17 +20,18 @@ const proxyAuthRequest = async (
 ) => {
   const targetUrl = getProxyUrl(request, pathSegments);
   const requestHeaders = new Headers(request.headers);
-
-  requestHeaders.set("host", targetUrl.host);
-
-  const response = await fetch(targetUrl, {
+  const requestInit: RequestInit & { duplex: "half" } = {
     body: request.body,
     cache: "no-store",
     duplex: "half",
     headers: requestHeaders,
     method: request.method,
     redirect: "manual",
-  });
+  };
+
+  requestHeaders.set("host", targetUrl.host);
+
+  const response = await fetch(targetUrl, requestInit);
 
   return new Response(response.body, {
     headers: response.headers,

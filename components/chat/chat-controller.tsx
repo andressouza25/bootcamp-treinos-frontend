@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { parseAsBoolean, parseAsString, useQueryStates } from "nuqs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import ChatPanel from "@/components/chat/chat-panel";
 import {
@@ -11,10 +11,7 @@ import {
   CHAT_OPEN_QUERY_KEY,
 } from "@/lib/chat";
 
-const emptyMessage = "";
-
 export default function ChatController() {
-  const [inputValue, setInputValue] = useState(emptyMessage);
   const [{ chatInitialMessage, chatOpen }, setChatState] = useQueryStates(
     {
       chatInitialMessage: parseAsString,
@@ -40,7 +37,7 @@ export default function ChatController() {
       return;
     }
 
-    if (!chatInitialMessage || messages.length > 0) {
+    if (!chatInitialMessage) {
       return;
     }
 
@@ -53,7 +50,7 @@ export default function ChatController() {
     void setChatState({
       chatInitialMessage: null,
     });
-  }, [chatInitialMessage, chatOpen, messages.length, sendMessage, setChatState]);
+  }, [chatInitialMessage, chatOpen, sendMessage, setChatState]);
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -70,16 +67,11 @@ export default function ChatController() {
   }, [messages]);
 
   const handleClose = () => {
-    setInputValue(emptyMessage);
     sentInitialMessageRef.current = null;
     void setChatState({
       chatInitialMessage: null,
       chatOpen: null,
     });
-  };
-
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
   };
 
   const handleSendMessage = async (message: string) => {
@@ -89,7 +81,6 @@ export default function ChatController() {
       return;
     }
 
-    setInputValue(emptyMessage);
     await fetch("/api/profile-from-chat", {
       body: JSON.stringify({ message: trimmedMessage }),
       headers: {
@@ -107,11 +98,9 @@ export default function ChatController() {
   return (
     <ChatPanel
       errorMessage={error?.message}
-      inputValue={inputValue}
       isPending={status === "streaming" || status === "submitted"}
       messages={messages}
       onClose={handleClose}
-      onInputChange={handleInputChange}
       onSendMessage={handleSendMessage}
     />
   );

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Flame } from "lucide-react";
 
 type StatsStreakBannerProps = {
@@ -11,20 +10,18 @@ export default function StatsStreakBanner({
   workoutStreakLabel,
 }: StatsStreakBannerProps) {
   const isActive = workoutStreak > 0;
-  const bannerImageUrl = isActive
-    ? "/stats/streak-banner-active.png"
-    : "/stats/streak-banner-inactive.png";
+  const bannerBackgroundImage = isActive
+    ? "var(--stats-banner-active)"
+    : "var(--stats-banner-inactive)";
 
   return (
     <section className="relative flex min-h-[212px] w-full flex-col items-center justify-center overflow-hidden rounded-[12px] px-5 py-10">
-      <Image
-        alt={isActive ? "Banner de sequência ativa" : "Banner de sequência zerada"}
-        className="object-cover"
-        fill
-        priority
-        sizes="100vw"
-        src={bannerImageUrl}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{ backgroundImage: bannerBackgroundImage }}
       />
+      <div className="absolute inset-0 bg-stats-banner-overlay" />
 
       <div className="relative z-10 flex flex-col items-center gap-3">
         <div className="flex size-14 items-center justify-center rounded-full border border-stats-banner-chip-border bg-stats-banner-chip backdrop-blur-[4px]">
@@ -36,7 +33,7 @@ export default function StatsStreakBanner({
             {workoutStreakLabel}
           </p>
           <p className="text-[16px] leading-[1.15] text-stats-banner-subtitle">
-            Sequência Atual
+            Sequencia Atual
           </p>
         </div>
       </div>

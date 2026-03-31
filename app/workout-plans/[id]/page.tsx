@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { getWorkoutPlan } from "@/app/_lib/api/fetch-generated";
-import { getServerSession } from "@/app/_lib/get-server-session";
+import { getAppPageContext } from "@/app/_lib/onboarding";
 import { getWorkoutPlanDays } from "@/app/_lib/workout-plan";
 import BottomNavigation from "@/components/home/bottom-navigation";
 import { Button } from "@/components/ui/button";
@@ -18,20 +18,12 @@ type WorkoutPlanPageProps = {
 export default async function WorkoutPlanPage({
   params,
 }: WorkoutPlanPageProps) {
-  const session = await getServerSession();
-
-  if (!session?.session.userId) {
-    redirect("/auth");
-  }
+  await getAppPageContext();
 
   const { id } = await params;
   const workoutPlanResponse = await getWorkoutPlan(id, {
     cache: "no-store",
   });
-
-  if (workoutPlanResponse.status === 401) {
-    redirect("/auth");
-  }
 
   if (workoutPlanResponse.status === 403 || workoutPlanResponse.status === 404) {
     notFound();

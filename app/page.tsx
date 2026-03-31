@@ -1,9 +1,6 @@
 import Image from "next/image";
 import { Flame } from "lucide-react";
-import { notFound, redirect } from "next/navigation";
 
-import { getHomeData } from "@/app/_lib/api/fetch-generated";
-import { getServerSession } from "@/app/_lib/get-server-session";
 import {
   getCurrentWeekDates,
   getTodayDate,
@@ -11,6 +8,7 @@ import {
   getWeekDayName,
   getWorkoutStreakValue,
 } from "@/app/_lib/home";
+import { getAppPageContext } from "@/app/_lib/onboarding";
 import BottomNavigation from "@/components/home/bottom-navigation";
 import WorkoutDayCard from "@/components/home/workout-day-card";
 import { Button } from "@/components/ui/button";
@@ -20,31 +18,11 @@ const logoImageUrl = "/auth/fit-ai-logo.svg";
 const todayWorkoutImageUrl = "/home/today-workout.png";
 
 export default async function Home() {
-  const session = await getServerSession();
-
-  if (!session?.session.userId) {
-    redirect("/auth");
-  }
-
-  const homeDataResponse = await getHomeData(getTodayDate(), {
-    cache: "no-store",
-  });
-
-  if (homeDataResponse.status === 401) {
-    redirect("/auth");
-  }
-
-  if (homeDataResponse.status !== 200) {
-    notFound();
-  }
+  const { homeData, session } = await getAppPageContext();
 
   const todayDate = getTodayDate();
-  const {
-    activeWorkoutPlanId,
-    consistencyByDay,
-    todayWorkoutDay,
-    workoutStreak,
-  } = homeDataResponse.data;
+  const { activeWorkoutPlanId, consistencyByDay, todayWorkoutDay, workoutStreak } =
+    homeData;
   const currentWeekDates = getCurrentWeekDates(todayDate);
   const resolvedWorkoutStreak = getWorkoutStreakValue(
     consistencyByDay,

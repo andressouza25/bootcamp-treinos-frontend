@@ -6,8 +6,8 @@ import {
   getWorkoutDays,
   updateWorkoutSession,
 } from "@/app/_lib/api/fetch-generated";
-import { getServerSession } from "@/app/_lib/get-server-session";
 import { getWeekDayName } from "@/app/_lib/home";
+import { getAppPageContext } from "@/app/_lib/onboarding";
 import {
   getWorkoutDayPath,
   getWorkoutSessionCompletedAt,
@@ -31,11 +31,7 @@ type WorkoutDayPageProps = {
 export default async function WorkoutDayPage({
   params,
 }: WorkoutDayPageProps) {
-  const session = await getServerSession();
-
-  if (!session?.session.userId) {
-    redirect("/auth");
-  }
+  await getAppPageContext();
 
   const { daysId: workoutDayId, id: workoutPlanId } = await params;
   const pagePath = getWorkoutDayPath(workoutPlanId, workoutDayId);
