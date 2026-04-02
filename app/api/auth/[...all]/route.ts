@@ -29,12 +29,18 @@ const proxyAuthRequest = async (
     redirect: "manual",
   };
 
+  requestHeaders.delete("accept-encoding");
   requestHeaders.set("host", targetUrl.host);
 
   const response = await fetch(targetUrl, requestInit);
+  const responseHeaders = new Headers(response.headers);
+
+  responseHeaders.delete("content-encoding");
+  responseHeaders.delete("content-length");
+  responseHeaders.delete("transfer-encoding");
 
   return new Response(response.body, {
-    headers: response.headers,
+    headers: responseHeaders,
     status: response.status,
     statusText: response.statusText,
   });
