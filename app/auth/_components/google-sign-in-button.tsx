@@ -16,7 +16,7 @@ const GoogleSignInButton = () => {
     setHasError(false);
 
     const { error } = await authClient.signIn.social({
-      callbackURL: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+      callbackURL: process.env.NEXT_PUBLIC_BASE_URL ?? "/",
       provider: "google",
     });
 
