@@ -229,7 +229,7 @@ const buildWorkoutDayName = (
     .replace(/^[-*\u2022\d.)\s]+/, "")
     .trim();
   const splitHeader = normalizedHeader
-    .split(/[:\-\u2013\u2014|]/)
+    .split(/\s*(?::|\||\u2013|\u2014)\s*/)
     .map((value) => value.trim());
   const descriptiveName = splitHeader.find(
     (value) => value.length > 0 && parseWeekDay(value) === undefined,

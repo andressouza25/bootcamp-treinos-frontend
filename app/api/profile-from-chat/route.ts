@@ -49,7 +49,16 @@ const getWeightInGrams = (content: string) => {
   );
 
   if (!genericMatch) {
-    return undefined;
+    const contextualQuestionMatch = getLastMatch(
+      content,
+      /quanto voc(?:e|ê) pesa(?:\s*\(em kg\))?\??\s*(\d{2,3}(?:[.,]\d{1,2})?)(?=$|[\s,.;])/gi,
+    );
+
+    if (!contextualQuestionMatch) {
+      return undefined;
+    }
+
+    return Math.round(normalizeDecimal(contextualQuestionMatch[1]) * 1000);
   }
 
   return Math.round(normalizeDecimal(genericMatch[1]) * 1000);

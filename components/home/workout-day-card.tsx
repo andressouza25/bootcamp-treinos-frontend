@@ -2,7 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, Dumbbell, Timer } from "lucide-react";
 
-import { getWorkoutDayPath } from "@/app/_lib/workout-day";
+import {
+  getWorkoutDayDisplayName,
+  getWorkoutDayPath,
+} from "@/app/_lib/workout-day";
 
 type WorkoutDayCardProps = {
   coverImageSrc: string;
@@ -29,13 +32,15 @@ export default function WorkoutDayCard({
   workoutDayId,
   workoutPlanId,
 }: WorkoutDayCardProps) {
+  const displayName = getWorkoutDayDisplayName(name);
+
   return (
     <Link
       className="relative flex h-[200px] w-full flex-col justify-between overflow-hidden rounded-[12px] p-5"
       href={getWorkoutDayPath(workoutPlanId, workoutDayId)}
     >
       <Image
-        alt={`Treino ${name}`}
+        alt={`Treino ${displayName}`}
         className="object-cover"
         fill
         priority
@@ -55,7 +60,7 @@ export default function WorkoutDayCard({
 
       <div className="relative z-10 flex flex-col gap-2">
         <h2 className="text-[24px] leading-[1.05] font-semibold text-primary-foreground">
-          {name}
+          {displayName}
         </h2>
 
         <div className="flex items-center gap-2">

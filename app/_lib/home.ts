@@ -27,11 +27,11 @@ const weekDayLabels: Record<GetHomeData200TodayWorkoutDayWeekDay, string> = {
 
 const weekDayNames: Record<GetHomeData200TodayWorkoutDayWeekDay, string> = {
   MONDAY: "SEGUNDA",
-  TUESDAY: "TERÇA",
+  TUESDAY: "TERCA",
   WEDNESDAY: "QUARTA",
   THURSDAY: "QUINTA",
   FRIDAY: "SEXTA",
-  SATURDAY: "SÁBADO",
+  SATURDAY: "SABADO",
   SUNDAY: "DOMINGO",
 };
 

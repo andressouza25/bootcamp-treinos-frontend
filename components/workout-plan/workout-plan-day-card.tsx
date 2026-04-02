@@ -4,6 +4,7 @@ import { CalendarDays, Dumbbell, Timer, Zap } from "lucide-react";
 
 import type { GetWorkoutPlan200WorkoutDaysItem } from "@/app/_lib/api/fetch-generated";
 import {
+  getWorkoutDayDisplayName,
   getWorkoutDayDurationLabel,
   getWorkoutDayPath,
 } from "@/app/_lib/workout-day";
@@ -45,6 +46,7 @@ const WorkoutPlanDayCard = ({
   }
 
   const imageUrl = getWorkoutPlanDayImageUrl(workoutDay);
+  const displayName = getWorkoutDayDisplayName(workoutDay.name);
 
   return (
     <Link
@@ -53,7 +55,7 @@ const WorkoutPlanDayCard = ({
     >
       {imageUrl ? (
         <Image
-          alt={`Treino ${workoutDay.name}`}
+          alt={`Treino ${displayName}`}
           className="object-cover"
           fill
           sizes="(max-width: 768px) 100vw, 350px"
@@ -73,7 +75,7 @@ const WorkoutPlanDayCard = ({
 
       <div className="relative z-10 flex flex-col gap-2">
         <h2 className="text-[24px] font-semibold leading-[1.05] text-primary-foreground">
-          {workoutDay.name}
+          {displayName}
         </h2>
 
         <div className="flex items-center gap-2">
@@ -97,4 +99,3 @@ const WorkoutPlanDayCard = ({
 };
 
 export default WorkoutPlanDayCard;
-

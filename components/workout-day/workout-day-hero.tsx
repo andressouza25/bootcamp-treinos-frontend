@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import type { GetWorkoutDays200 } from "@/app/_lib/api/fetch-generated";
 import {
+  getWorkoutDayDisplayName,
   getWorkoutDayDurationLabel,
   getWorkoutDayWeekDayLabel,
   workoutDayFallbackImageUrl,
@@ -16,10 +17,12 @@ type WorkoutDayHeroProps = {
 };
 
 const WorkoutDayHero = ({ action, workoutDay }: WorkoutDayHeroProps) => {
+  const displayName = getWorkoutDayDisplayName(workoutDay.name);
+
   return (
     <section className="relative flex h-[200px] flex-col justify-between overflow-hidden rounded-[12px] p-5">
       <Image
-        alt={`Treino ${workoutDay.name}`}
+        alt={`Treino ${displayName}`}
         className="object-cover"
         fill
         priority
@@ -40,7 +43,7 @@ const WorkoutDayHero = ({ action, workoutDay }: WorkoutDayHeroProps) => {
       <div className="relative z-10 flex items-end justify-between gap-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-[24px] font-semibold leading-[1.05] text-primary-foreground">
-            {workoutDay.name}
+            {displayName}
           </h2>
 
           <div className="flex items-center gap-2">

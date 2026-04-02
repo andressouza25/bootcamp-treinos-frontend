@@ -22,8 +22,45 @@ export const getWorkoutDayDurationLabel = (
 export const getWorkoutDayWeekDayLabel = (weekDay: Parameters<typeof getWeekDayName>[0]) =>
   getWeekDayName(weekDay);
 
+const normalizedWeekDayLikeNames = new Set([
+  "segunda",
+  "segunda-feira",
+  "terca",
+  "terca-feira",
+  "quarta",
+  "quarta-feira",
+  "quinta",
+  "quinta-feira",
+  "sexta",
+  "sexta-feira",
+  "sabado",
+  "domingo",
+  "feira",
+  "treino segunda-feira",
+  "treino terca-feira",
+  "treino quarta-feira",
+  "treino quinta-feira",
+  "treino sexta-feira",
+  "treino sabado",
+  "treino domingo",
+]);
+
+export const getWorkoutDayDisplayName = (name: string) => {
+  const normalizedName = name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+
+  if (normalizedWeekDayLikeNames.has(normalizedName)) {
+    return "Treino";
+  }
+
+  return name;
+};
+
 export const getExerciseSetsLabel = (sets: GetWorkoutDays200ExercisesItem["sets"]) =>
-  `${sets} SÉRIES`;
+  `${sets} SERIES`;
 
 export const getExerciseRepsLabel = (reps: GetWorkoutDays200ExercisesItem["reps"]) =>
   `${reps} REPS`;
