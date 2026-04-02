@@ -10,7 +10,7 @@ const heroImageUrl = "/auth/login-hero.png";
 const AuthPage = async () => {
   const session = await getServerSession();
 
-  if (session) {
+  if (session?.session.userId) {
     redirect("/");
   }
 
