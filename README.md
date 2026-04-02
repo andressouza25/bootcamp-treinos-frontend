@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FIT.AI Backend
 
-## Getting Started
+Backend da plataforma FIT.AI, responsável por autenticação, regras de negócio, geração de planos de treino, estatísticas, sessão do usuário, documentação OpenAPI e endpoints consumidos pelo frontend.
 
-First, run the development server:
+## Link externo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Produção: https://fit-api.anderssouza25.com.br
+
+## Tecnologias e ferramentas
+
+### Frameworks e runtime
+
+- Fastify 5
+- TypeScript 5
+- Node.js 24
+
+### Banco de dados e ORM
+
+- PostgreSQL
+- Prisma 7
+- @prisma/client
+- @prisma/adapter-pg
+
+### Autenticação
+
+- Better Auth
+
+### Validação e tipagem
+
+- Zod
+- fastify-type-provider-zod
+
+### Documentação de API
+
+- @fastify/swagger
+- @scalar/fastify-api-reference
+
+### IA
+
+- AI SDK
+- @ai-sdk/openai
+- @ai-sdk/google
+
+### Infra e utilitários
+
+- Docker
+- Docker Compose
+- dayjs
+- dotenv
+- pino-pretty
+
+### Qualidade e desenvolvimento
+
+- ESLint 9
+- Prettier 3
+- tsx
+- pnpm
+
+## Funcionalidades principais
+
+- Autenticação com Better Auth
+- Exposição de endpoints REST para o frontend
+- Geração e consulta de planos de treino
+- Consulta de dados da home do usuário
+- Consulta de estatísticas de treino
+- Persistência de dados com Prisma e PostgreSQL
+- Documentação OpenAPI em `/swagger.json`
+- Referência interativa da API com Scalar
+- Rotas de IA para suporte ao fluxo do produto
+
+## Estrutura do projeto
+
+```text
+src/             código-fonte da API
+src/routes/      definição das rotas HTTP
+src/usecases/    regras de negócio e casos de uso
+src/lib/         autenticação, banco e variáveis de ambiente
+prisma/          schema e migrations
+docs/            documentação auxiliar
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Variáveis de ambiente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Crie um arquivo `.env` com base no `.env.example`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Principais variáveis esperadas pelo projeto:
 
-## Learn More
+- `DATABASE_URL`
+- variáveis de autenticação do Better Auth
+- variáveis de provedores de IA
+- porta e ambiente de execução
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+pnpm build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Infra local
 
-## Deploy on Vercel
+O projeto possui suporte a ambiente local com Docker Compose para subir o PostgreSQL.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Integração com o frontend
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Frontend público:
+
+- https://fitai.andressouza25.com.br
