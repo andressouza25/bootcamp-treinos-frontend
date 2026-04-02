@@ -1,6 +1,6 @@
 "use client";
 
-import { parseAsBoolean, parseAsString, useQueryStates } from "nuqs";
+import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -32,29 +32,27 @@ export default function OpenChatButton({
   size = "default",
   variant = "default",
 }: OpenChatButtonProps) {
-  const [, setChatState] = useQueryStates(
-    {
-      chatInitialMessage: parseAsString,
-      chatOpen: parseAsBoolean,
-    },
-    {
-      urlKeys: {
-        chatInitialMessage: CHAT_INITIAL_MESSAGE_QUERY_KEY,
-        chatOpen: CHAT_OPEN_QUERY_KEY,
-      },
-    },
-  );
+  const router = useRouter();
 
   return (
     <Button
       aria-label={ariaLabel}
       className={className}
-      onClick={() =>
-        void setChatState({
-          chatInitialMessage: initialMessage ?? null,
-          chatOpen: true,
-        })
-      }
+      onClick={() => {
+        const url = new URL(window.location.href);
+
+        if (initialMessage) {
+          url.searchParams.set(CHAT_INITIAL_MESSAGE_QUERY_KEY, initialMessage);
+        } else {
+          url.searchParams.delete(CHAT_INITIAL_MESSAGE_QUERY_KEY);
+        }
+
+        url.searchParams.set(CHAT_OPEN_QUERY_KEY, "true");
+
+        router.push(`${url.pathname}${url.search}${url.hash}`, {
+          scroll: false,
+        });
+      }}
       size={size}
       type="button"
       variant={variant}

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Suspense } from "react";
 
-import ChatController from "@/components/chat/chat-controller";
+import ChatControllerProvider from "@/components/chat/chat-controller-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,10 +31,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <NuqsAdapter>
-          {children}
-          <ChatController />
-        </NuqsAdapter>
+        {children}
+        <Suspense fallback={null}>
+          <ChatControllerProvider />
+        </Suspense>
       </body>
     </html>
   );
