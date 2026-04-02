@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FIT.AI Frontend
 
-## Getting Started
+Frontend da plataforma FIT.AI, responsável pela interface de autenticação, onboarding, home, planos de treino, detalhes dos dias de treino, estatísticas e experiência de chat com IA.
 
-First, run the development server:
+## Link externo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Produção: https://fitai.andressouza25.com.br
+
+## Tecnologias e ferramentas
+
+### Frameworks e runtime
+
+- Next.js 16
+- React 19
+- TypeScript 5
+- Node.js
+
+### Estilização e UI
+
+- Tailwind CSS 4
+- shadcn/ui
+- Radix UI
+- class-variance-authority
+- clsx
+- tailwind-merge
+- tw-animate-css
+- Lucide React
+
+### Formulários e validação
+
+- React Hook Form
+- Zod
+- @hookform/resolvers
+
+### Autenticação
+
+- Better Auth
+
+### Consumo de API e geração de client
+
+- Fetch API
+- Orval
+
+### IA e experiência conversacional
+
+- AI SDK
+- @ai-sdk/react
+- streamdown
+
+### Utilitários
+
+- dayjs
+- nuqs
+- dotenv
+
+### Qualidade e desenvolvimento
+
+- ESLint 9
+- Prettier 3
+- pnpm
+
+## Funcionalidades principais
+
+- Autenticação social com Google
+- Onboarding inicial do usuário
+- Listagem de planos de treino
+- Visualização de dias e exercícios do treino
+- Página inicial com resumo do treino atual
+- Página de estatísticas
+- Chat com IA integrado ao fluxo da aplicação
+- Integração com backend via rotas e tipos gerados
+
+## Estrutura do projeto
+
+```text
+app/                         rotas, páginas e lógica do App Router
+app/_lib/                    helpers, auth, fetch e integrações internas
+app/_lib/api/fetch-generated cliente gerado pelo Orval para server-side
+components/                  componentes reutilizáveis da aplicação
+components/ui/               componentes base do shadcn/ui
+lib/                         utilitários compartilhados
+public/                      assets estáticos
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Variáveis de ambiente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Crie um arquivo `.env` com base no `.env.example`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Variáveis utilizadas:
 
-## Learn More
+- `NEXT_PUBLIC_API_URL`: URL da API utilizada pelo frontend
+- `NEXT_PUBLIC_BASE_URL`: URL base pública da aplicação para fluxos de autenticação
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+pnpm build
+pnpm start
+pnpm lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Integração com o backend
 
-## Deploy on Vercel
+O frontend consome a documentação OpenAPI exposta pelo backend em `/swagger.json` para gerar funções de acesso à API com Orval.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Backend público:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- https://fit-api.anderssouza25.com.br
