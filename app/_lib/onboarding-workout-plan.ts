@@ -167,13 +167,18 @@ const getExerciseName = (line: string) =>
     .replace(/\s*[:(].*$/, "")
     .trim();
 
-const extractExercises = (
-  content: string,
-): CreateWorkoutPlanBodyWorkoutDaysItemExercisesItem[] => {
-  const lines = content
+const restDayKeywords = /\b(descanso|recuperacao|folga|rest day|rest)\b/i;
+
+const getMeaningfulSectionLines = (content: string) =>
+  content
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
+
+const extractExercises = (
+  content: string,
+): CreateWorkoutPlanBodyWorkoutDaysItemExercisesItem[] => {
+  const lines = getMeaningfulSectionLines(content);
 
   return lines
     .filter((line) =>
@@ -193,6 +198,31 @@ const extractExercises = (
       };
     })
     .filter((exercise) => exercise.name.length > 0);
+};
+
+const isRestDaySection = (header: string, content: string) => {
+  const normalizedHeader = normalizeText(header);
+
+  if (restDayKeywords.test(normalizedHeader)) {
+    return true;
+  }
+
+  const meaningfulLines = getMeaningfulSectionLines(content).slice(0, 2);
+
+  if (meaningfulLines.length === 0) {
+    return false;
+  }
+
+  return meaningfulLines.some((line) => {
+    const normalizedLine = normalizeText(line);
+
+    return (
+      restDayKeywords.test(normalizedLine) &&
+      !/(?:\d{1,2}\s*x\s*\d{1,3}|\d{1,2}\s*series?|descans(?:o|ar)\s+\d)/i.test(
+        normalizedLine,
+      )
+    );
+  });
 };
 
 const parseWeekDay = (line: string) => {
@@ -296,11 +326,9 @@ const extractWorkoutDaysFromSections = (content: string) => {
   }
 
   return sections.map(({ content: sectionContent, header, weekDay }) => {
-    const isRest = /descanso|recuperacao|folga/i.test(
-      normalizeText(sectionContent),
-    );
-    const exercises = isRest ? [] : extractExercises(sectionContent);
-    const resolvedIsRest = isRest || exercises.length === 0;
+    const exercises = extractExercises(sectionContent);
+    const isRest = exercises.length === 0 && isRestDaySection(header, sectionContent);
+    const resolvedIsRest = isRest;
 
     return {
       estimatedDurationInSeconds: getDurationInSeconds(
@@ -364,11 +392,9 @@ const extractSequentialWorkoutDaysFromSections = (content: string) => {
 
   return sections
     .map(({ content: sectionContent, header, weekDay }) => {
-      const isRest = /descanso|recuperacao|folga|rest/i.test(
-        normalizeText(sectionContent),
-      );
-      const exercises = isRest ? [] : extractExercises(sectionContent);
-      const resolvedIsRest = isRest || exercises.length === 0;
+      const exercises = extractExercises(sectionContent);
+      const isRest = exercises.length === 0 && isRestDaySection(header, sectionContent);
+      const resolvedIsRest = isRest;
 
       return {
         estimatedDurationInSeconds: getDurationInSeconds(
@@ -396,7 +422,8 @@ const normalizeWorkoutDay = (
       sets: Math.max(1, Math.round(exercise.sets)),
     }),
   );
-  const isRest = workoutDay.isRest ?? normalizedExercises.length === 0;
+  const isRest =
+    normalizedExercises.length === 0 ? (workoutDay.isRest ?? true) : false;
 
   return {
     coverImageUrl: workoutDay.coverImageUrl?.trim() || undefined,
